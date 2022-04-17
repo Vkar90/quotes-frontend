@@ -1,0 +1,34 @@
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+.submit-form {
+  max-width: 300px;
+  margin: auto;
+}
+.edit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.table-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem;
+  flex-direction: column;
+}
+
+table{
+  width: 80vw;
+}
+
+a, a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.add-new-section{
+  margin: 3rem;
+}
