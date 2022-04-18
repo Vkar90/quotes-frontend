@@ -1,11 +1,12 @@
 import React, {useState, useEffect } from 'react'
 import QuoteService from '../services/QuoteService'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const QuotesList = () => {
   const [quotes, setQuotes] = useState([])
   const [currentQuote, setCurrentQuote] = useState(null)
-  const [currentIndex, setCurrentIndex] = useState(-1)
+  // const [currentIndex, setCurrentIndex] = useState(-1)
+  const [isEditing, setIsEditing] = useState(false)
   
   useEffect(() => {
     retrieveQuotes()
@@ -21,9 +22,13 @@ const QuotesList = () => {
         console.log(error)
       })
   }
-  const setActiveQuote = (quote, index) => {
-    setCurrentQuote(quote)
-    setCurrentIndex(index)
+  function handleDelete(e){
+    QuoteService.remove().then(response => {
+      console.log(response.data)
+      setQuotes((data) => {
+        return data.filter((quote) => quote.id !== e.target.value)
+      })
+    })
   }
 
   return (
@@ -37,15 +42,17 @@ const QuotesList = () => {
           </tr>
         </thead>
         <tbody>
-          {quotes && quotes.map((quote, index) => {
+          {quotes && quotes.map((quote, id) => {
             return (
-              <tr key={index} onClick={() => setActiveQuote(quote, index)}>
+              <tr key={quote.id}>
                 <td>{quote.text}</td>
                 <td>{quote.author}</td>
                 <td>
-                  <button className="btn btn-danger m-2">Edit</button>
+                  <button className="btn btn-success m-2">Edit</button>
                   <button
-                  className="btn btn-danger m-2">
+                  className="btn btn-danger m-2"
+                  oncClick={handleDelete}
+                  >
                   Delete
                 </button>
                 </td>

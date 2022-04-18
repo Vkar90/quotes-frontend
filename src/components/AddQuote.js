@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import QuoteService from '../services/QuoteService'
 
 const AddQuote = () => {     
@@ -45,7 +46,7 @@ const AddQuote = () => {
             {submitted ? (
                 <div>
                     <h4>You submitted successfully</h4>
-                    <button className='btn btn-success' onClick={newQuote}>Add</button>
+                    <button className='btn btn-success' onClick={newQuote}><Link to={"/"}>Back to Quotes</Link></button>
                 </div>
             ): (
                 <div>

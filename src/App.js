@@ -10,7 +10,7 @@ const App = () => {
     <div>
       <nav className='navbar navbar-expand navbar-dark bg-dark'>
         <a href="/" className='navbar-brand'>
-          Quotes Management MERN App
+          Quotes Management App
         </a>
         <div className='navbar-nav mr-auto'>
           <li className='nav-item'>
