@@ -1,84 +1,79 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import QuoteService from '../services/QuoteService'
+import { post } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-const AddQuote = () => {     
-    const initialQuoteState = {
-        id: null,
-        text: '',
-        author: ''
-    }
+function AddQuote(props) {  
+  const initialState = {
+      text: "",
+      author: ""
+  }
 
-    const [quote, setQuote] = useState(initialQuoteState)
-    const [submitted, setSubmitted] = useState(false)
+  const [quote, setQuote] = useState(initialState)
 
-    const handleInputChange = event => {
-        const { name, value } = event.target
-        setQuote({ ...quote, [name]: value})
-    }
+  const navigate = useNavigate()
 
-    const saveQuote = () => {
-        let data = {
-            text: quote.text,
-            author: quote.author
+  function handleSubmit(event) {
+    event.preventDefault();
+    async function postQuote() {
+        try {
+            const response = await post("/api/quotes/", quote);
+            navigate(`/quote/${response.data._id}`);
+        } catch (error) {
+            console.log("error", error);
         }
-        QuoteService.create(data)
-            .then(response => {
-                setQuote({
-                    id:response.data.id,
-                    text:response.data.text,
-                    author:response.data.author
-                })
-                setSubmitted(true)
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
+    postQuote()
+}
 
-    const newQuote = () => {
-        setQuote(initialQuoteState)
-        setSubmitted(false)
-    }  
-    return (
-        <div className='submit-form'>
-            {submitted ? (
-                <div>
-                    <h4>You submitted successfully</h4>
-                    <button className='btn btn-success' onClick={newQuote}><Link to={"/"}>Back to Quotes</Link></button>
-                </div>
-            ): (
-                <div>
-                    <h2 style={{marginTop:"3rem"}}>Add a new Quote</h2>
-                    <div className='form-group'>
-                        <label htmlFor='text'>Quote</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="text"
-                            required
-                            value={quote.text}
-                            onChange={handleInputChange}
-                            name="text"
-                         />
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='text'>Author</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="author"
-                            value={quote.author}
-                            onChange={handleInputChange}
-                            name="author"
-                         />
-                    </div>
-                    <button onClick={saveQuote} className="btn btn-success">Submit</button>
-                </div>
-            )}
-        </div>
-     ) 
-    }
+
+function handleChange(event) {
+    setQuote({ ...quote, [event.target.name]: event.target.value });
+}
+
+function handleCancel() {
+    navigate("/");
+}
+
+
+  return (
+    <div className='container'>
+        <h1>Add a new quote</h1>
+        <form onSubmit={handleSubmit}>
+            <div className='form-group'>
+                <label>Quote</label>
+                <input
+                    name='text'
+                    type='text'
+                    required
+                    value={quote.text}
+                    onChange={handleChange}
+                    className='form-control'
+                 />
+            </div>
+            <div className='form-group'>
+                <label>Author</label>
+                <input
+                    name='author'
+                    type='text'
+                    required
+                    value={quote.author}
+                    onChange={handleChange}
+                    className='form-control'
+                 />
+            </div>
+            <div className="btn-group my-3">
+                <input type="submit" value="Submit" className="btn btn-primary rounded" />
+                <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="btn btn-secondary mx-3 rounded"
+                >
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+  )
+}
 
 export default AddQuote

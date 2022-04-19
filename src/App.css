@@ -1,34 +1,19 @@
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-}
-.submit-form {
-  max-width: 300px;
-  margin: auto;
-}
-.edit-form {
-  max-width: 300px;
-  margin: auto;
-}
-
-.table-wrapper{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5rem;
-  flex-direction: column;
-}
-
-table{
-  width: 80vw;
-}
-
-a, a:hover {
+.header {
+  width: 100%;
+  padding: 2%;
+  background-color: rgb(27, 28, 27);
   color: white;
-  text-decoration: none;
+  text-align: center;
 }
 
-.add-new-section{
-  margin: 3rem;
+.mrgnbtm {
+  margin-top: 3rem;
+}
+
+.btncenter {
+  text-align: center;
+}
+
+.mrgnbtm1 {
+  margin: 1rem 0 3rem 0;
 }

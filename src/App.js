@@ -1,34 +1,28 @@
 import React from 'react'
-import "bootstrap/dist/css/bootstrap.css";
-import './App.css'
-import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Navbar from './components/Navbar';
+import Footer from './components/Footer'
+import QuotesTable from './components/QuotesTable';
+import Quote from './components/Quote';
 import AddQuote from './components/AddQuote';
-import QuotesList from './components/QuotesList';
+import EditQuote from './components/EditQuote';
+import DeleteQuote from './components/DeleteQuote';
 
-const App = () => {
+export default function App() {
   return (
-    <div>
-      <nav className='navbar navbar-expand navbar-dark bg-dark'>
-        <a href="/" className='navbar-brand'>
-          Quotes Management App
-        </a>
-        <div className='navbar-nav mr-auto'>
-          <li className='nav-item'>
-            <Link to={"/add"} className="nav-link">
-              Add Quote
-            </Link>
-          </li>
-        </div>
-      </nav>
-      <div className='container mt-3'>
+    <div className='App'>
+      <Router>
+        <Navbar />
         <Routes>
-          <Route path="/" element={<QuotesList />} />
-          <Route path="/quotes" element={<QuotesList />} />
-          <Route path="/add" element={<AddQuote />} />
+          <Route exact path ="/" element={<QuotesTable />} />
+          <Route exact path="/add-quote" element={<AddQuote />} />
+          <Route exact path="/api/quotes/:id" element={<Quote />} />
+          <Route exact path="/api/quotes/:id/edit" element={<EditQuote />} />
+          <Route exact path="/api/quotes/:id/delete" element={<DeleteQuote />} />
         </Routes>
-      </div>
+        <Footer />
+      </Router>
     </div>
   )
 }
-
-export default App
