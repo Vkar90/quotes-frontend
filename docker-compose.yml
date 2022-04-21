@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  #Frontend. 
+  frontend:
+   build:
+      context: ./quotes-frontend
+      dockerfile: Dockerfile.dev
+   ports:
+    -  3000:3000
+   container_name: quotes-frontend
+   networks:
+    -  mern-stack-net
+   volumes:
+    -  ./quotes-frontend/src:/usr/app/src
+    -  ./quotes-frontend/public:/usr/app/public
+   stdin_open: true
+   tty: true
