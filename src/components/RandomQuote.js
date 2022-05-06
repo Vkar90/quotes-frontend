@@ -18,14 +18,14 @@ const RandomQuote = () => {
     setRandomQuote(response.data);
   }
 
-  const now = DateTime.utc().toLocal(); //get the user's local time
-  const endOfDay = now.endOf("day"); //set interval to end of local timezone's day
-
   useEffect(() => {
+    const now = DateTime.utc().toLocal(); //get the user's local time
+    const endOfDay = now.endOf("day"); //set interval to end of local timezone's day
+    var dayInMilliseconds = 1000 * 60 * 60 * 24;
     getRandomQuote();
     const interval = setInterval(() => {
       getRandomQuote();
-    }, endOfDay);
+    }, dayInMilliseconds);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
